@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -58,4 +59,15 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Get the subscription associated with the User
+     *  Kullanıcıya ait aboneliği alın
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function Subscription(): HasOne
+    {
+        return $this->hasOne(Subscriptions::class);
+    }
 }
