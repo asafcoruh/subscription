@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SocialController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,6 +16,13 @@ use Inertia\Inertia;
 |
 */
 
+Route::get('/auth/{provider}/redirect', [SocialController::class, 'redirect'])
+    ->where('provider', 'github|gitlab|google');
+
+Route::get('/auth/{provider}/callback', [SocialController::class, 'callback'])
+    ->where('provider', 'github|gitlab|google');
+
+    
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -33,3 +41,4 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
